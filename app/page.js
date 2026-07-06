@@ -10,6 +10,7 @@ const T = {
     hero_sub:
       'Authentic Vedic astrology (handahana), palm reading, porondam matching, dream meanings and nekath — all in one place, in your language.',
     hero_cta: 'Join the waitlist',
+    hero_try: 'Try an early birth-chart reading →',
     hero_trust: 'Built for Sri Lanka · Sinhala, Tamil & English',
     feat_eyebrow: 'The experience',
     feat_title: "What you'll get",
@@ -68,6 +69,7 @@ const T = {
     hero_sub:
       'සැබෑ වෛදික ජ්‍යෝතිෂය (හඳහන), හස්ත රේඛා, පොරොන්දම්, සිහින පලාපල සහ නැකත් — සියල්ල එකම තැනක, ඔබේ භාෂාවෙන්.',
     hero_cta: 'පොරොත්තු ලැයිස්තුවට එක්වන්න',
+    hero_try: 'මුල්ම හඳහන් කියවීමක් ලබාගන්න →',
     hero_trust: 'ශ්‍රී ලංකාව සඳහා · සිංහල, දෙමළ සහ ඉංග්‍රීසි',
     feat_eyebrow: 'අත්දැකීම',
     feat_title: 'ඔබට ලැබෙන දේ',
@@ -219,6 +221,9 @@ export default function Home() {
           <h1>{s('hero_title')}</h1>
           <p className="sub">{s('hero_sub')}</p>
           <a href="#join" className="btn">{s('hero_cta')}</a>
+          <div style={{ marginTop: 14 }}>
+            <a href="/reading" style={{ color: 'var(--gold-soft)', textDecoration: 'none', borderBottom: '1px solid var(--line)', paddingBottom: 2, fontSize: '.95rem' }}>{s('hero_try')}</a>
+          </div>
           <div className="trust">{s('hero_trust')}</div>
         </section>
 

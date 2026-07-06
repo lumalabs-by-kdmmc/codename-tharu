@@ -53,6 +53,17 @@ npm run dev             # http://localhost:3000
 4. Under **Environment Variables**, add `DATABASE_URL` (paste the pooled Neon connection string).
 5. **Deploy.** You'll get a `*.vercel.app` URL. Add a custom domain later under the project's **Domains** tab.
 
+## Phase 1: birth-chart reading (`/reading`)
+Collects birth details and returns a personal Vedic reading (English + Sinhala), grounded in a real Prokerala chart. Saves to the Neon `profiles` and `readings` tables.
+
+### Additional environment variables
+| Name | Required | Purpose |
+|---|---|---|
+| `PROKERALA_CLIENT_ID` | Yes (for /reading) | Prokerala API client id (production) |
+| `PROKERALA_CLIENT_SECRET` | Yes (for /reading) | Prokerala API client secret (production) |
+| `OPENAI_API_KEY` | Optional | Enables AI-written readings; without it, a grounded template is used |
+| `LLM_MODEL` | Optional | OpenAI model (default `gpt-4o-mini`) |
+
 ## Notes
-- Palm reading, birth-chart generation, porondam, dream and nekath features are Phase 1 — this repo is the Phase 0 waitlist only.
+- Porondam, palm reading, dream and nekath features come next.
 - Sinhala copy should be reviewed by a native speaker before wide sharing.
