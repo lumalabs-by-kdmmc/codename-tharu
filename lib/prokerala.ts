@@ -12,7 +12,7 @@ async function getToken() {
   const id = process.env.PROKERALA_CLIENT_ID;
   const secret = process.env.PROKERALA_CLIENT_SECRET;
   if (!id || !secret) {
-    const err = new Error("Prokerala credentials are not configured");
+    const err: any = new Error("Prokerala credentials are not configured");
     err.code = "NO_PROKERALA_CREDS";
     throw err;
   }

@@ -99,7 +99,7 @@ function templateReading(facts, name) {
   };
 }
 
-export async function generateReading(facts, { name } = {}) {
+export async function generateReading(facts: any, { name }: { name?: string } = {}) {
   if (hasLLM()) {
     try {
       const glossary = {

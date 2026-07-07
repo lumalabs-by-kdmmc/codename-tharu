@@ -12,11 +12,12 @@ A trilingual (Sinhala / English, Tamil coming soon) web app: Vedic astrology, pa
 - **`/nekath`** — auspicious periods (muhurat) for a chosen day/place
 
 ## Tech
-- Next.js 14 (App Router, JavaScript)
+- Next.js 16 (App Router) + React 19, **TypeScript**
+- **Tailwind CSS v4** + **shadcn/ui** components (`components/ui`)
 - Neon Postgres (`@neondatabase/serverless`)
 - Prokerala Astrology API v2 (OAuth2)
 - OpenAI (readings, porondam explanation, dreams, palm vision)
-- Sinhala terminology glossary (`lib/glossary.js`) keeps astrology terms correct (e.g. බුධ, not a transliteration of "Mercury")
+- Sinhala terminology glossary (`lib/glossary.ts`) keeps astrology terms correct (e.g. බුධ, not a transliteration of "Mercury")
 
 ## Environment variables (set on Vercel)
 | Name | Required | Purpose |

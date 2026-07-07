@@ -10,7 +10,7 @@ export function hasLLM() {
 async function call(body) {
   const key = process.env.OPENAI_API_KEY;
   if (!key) {
-    const e = new Error("OpenAI key not configured");
+    const e: any = new Error("OpenAI key not configured");
     e.code = "NO_LLM";
     throw e;
   }
@@ -28,11 +28,11 @@ async function call(body) {
   return JSON.parse(content);
 }
 
-export async function chatJSON(messages, { model, temperature = 0.7 } = {}) {
+export async function chatJSON(messages: any, { model, temperature = 0.7 }: { model?: string; temperature?: number } = {}) {
   return call({ model: model || DEFAULT_MODEL(), messages, response_format: { type: "json_object" }, temperature });
 }
 
-export async function visionJSON(prompt, imageDataUrl, { model, temperature = 0.6 } = {}) {
+export async function visionJSON(prompt: any, imageDataUrl: any, { model, temperature = 0.6 }: { model?: string; temperature?: number } = {}) {
   const messages = [{
     role: "user",
     content: [
