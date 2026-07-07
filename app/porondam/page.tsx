@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { LangToggle } from "@/components/lang-toggle";
+import { GatedSubmit } from "@/components/gated-submit";
 
 type Lang = "en" | "si";
 
@@ -91,7 +92,7 @@ export default function Porondam() {
       <form onSubmit={submit}>
         <PersonFields t={t} label={t("bride")} v={bride} set={setBride} />
         <PersonFields t={t} label={t("groom")} v={groom} set={setGroom} />
-        <Button type="submit" className="w-full" disabled={status === "loading"}>{status === "loading" ? t("loading") : t("submit")}</Button>
+        <GatedSubmit loading={status === "loading"} lang={lang}>{status === "loading" ? t("loading") : t("submit")}</GatedSubmit>
         {status === "error" && <p className="mt-2 text-center text-sm text-red-300">{t("err")}</p>}
       </form>
 

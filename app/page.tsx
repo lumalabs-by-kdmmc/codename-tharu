@@ -5,6 +5,7 @@ import { Sparkles, Hand, Heart, Moon, Sun, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LangToggle } from "@/components/lang-toggle";
+import { AuthButton } from "@/components/auth-button";
 
 type Lang = "en" | "si" | "ta";
 
@@ -84,6 +85,7 @@ export default function Home() {
             <Button asChild size="sm" className="hidden sm:inline-flex">
               <a href="/reading">{s("nav_cta")}</a>
             </Button>
+            <AuthButton />
           </div>
         </div>
       </header>
