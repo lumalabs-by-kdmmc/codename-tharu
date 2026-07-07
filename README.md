@@ -53,8 +53,15 @@ npm run dev             # http://localhost:3000
 4. Under **Environment Variables**, add `DATABASE_URL` (paste the pooled Neon connection string).
 5. **Deploy.** You'll get a `*.vercel.app` URL. Add a custom domain later under the project's **Domains** tab.
 
-## Phase 1: birth-chart reading (`/reading`)
-Collects birth details and returns a personal Vedic reading (English + Sinhala), grounded in a real Prokerala chart. Saves to the Neon `profiles` and `readings` tables.
+## Phase 1 features
+All in English + Sinhala, with a language toggle:
+- **`/reading`** — Vedic birth chart + AI reading, grounded in a real Prokerala chart. Saves to Neon `profiles` + `readings`.
+- **`/porondam`** — marriage compatibility (Guna Milan) from two charts, with a warm AI explanation.
+- **`/palm`** — palm reading from an uploaded photo (client-side resized) via OpenAI vision, with a photo-quality gate. Entertainment-framed.
+- **`/dreams`** — dream interpretation (sihina palapala) via the LLM.
+- **`/nekath`** — auspicious periods (muhurat) for a chosen day/place from Prokerala.
+
+A Sinhala terminology glossary (`lib/glossary.js`) keeps astrology terms correct (e.g. බුධ, not a transliteration of "Mercury"). Readings use a grounded template fallback when no LLM key is set.
 
 ### Additional environment variables
 | Name | Required | Purpose |
@@ -65,5 +72,6 @@ Collects birth details and returns a personal Vedic reading (English + Sinhala),
 | `LLM_MODEL` | Optional | OpenAI model (default `gpt-4o-mini`) |
 
 ## Notes
-- Porondam, palm reading, dream and nekath features come next.
-- Sinhala copy should be reviewed by a native speaker before wide sharing.
+- `OPENAI_API_KEY` powers the AI reading, porondam explanation, dreams, and palm reading. Palm uses `gpt-4o` (vision) regardless of `LLM_MODEL`. Set `LLM_MODEL=gpt-4o` for higher-fidelity Sinhala on the text features.
+- Sinhala copy and readings should be spot-checked by a native speaker before wide sharing.
+- Next up: auth, saved reading history per user, and payments (PayHere).
