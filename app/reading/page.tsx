@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { LangToggle } from "@/components/lang-toggle";
+import { GatedSubmit } from "@/components/gated-submit";
 
 type Lang = "en" | "si";
 
@@ -87,9 +88,9 @@ export default function Reading() {
               </Select>
             </div>
           </div>
-          <Button type="submit" className="w-full" disabled={status === "loading"}>
+          <GatedSubmit loading={status === "loading"} lang={lang}>
             {status === "loading" ? t("loading") : t("submit")}
-          </Button>
+          </GatedSubmit>
           {status === "error" && <p className="text-center text-sm text-red-300">{t("err")}</p>}
         </form>
       </Card>

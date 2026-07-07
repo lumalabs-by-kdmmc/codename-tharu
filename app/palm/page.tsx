@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LangToggle } from "@/components/lang-toggle";
+import { GatedSubmit } from "@/components/gated-submit";
 import { cn } from "@/lib/utils";
 
 type Lang = "en" | "si";
@@ -77,7 +78,7 @@ export default function Palm() {
             <input type="file" accept="image/*" capture="environment" onChange={onFile} className="hidden" />
           </label>
           {preview && <img src={preview} alt="palm" className="my-2.5 max-w-full rounded-xl border border-gold/20" />}
-          <Button type="submit" className="w-full" disabled={status === "loading" || !dataUrl}>{status === "loading" ? t("loading") : t("submit")}</Button>
+          <GatedSubmit loading={status === "loading"} disabled={!dataUrl} lang={lang}>{status === "loading" ? t("loading") : t("submit")}</GatedSubmit>
           {status === "error" && <p className="text-center text-sm text-red-300">{t("err")}</p>}
         </form>
       </Card>

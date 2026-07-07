@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { LangToggle } from "@/components/lang-toggle";
+import { GatedSubmit } from "@/components/gated-submit";
 
 type Lang = "en" | "si";
 
@@ -44,7 +45,7 @@ export default function Dreams() {
       <Card>
         <form onSubmit={submit} className="space-y-4">
           <Textarea rows={5} value={dream} onChange={(e) => setDream(e.target.value)} placeholder={t("ph")} />
-          <Button type="submit" className="w-full" disabled={status === "loading"}>{status === "loading" ? t("loading") : t("submit")}</Button>
+          <GatedSubmit loading={status === "loading"} lang={lang}>{status === "loading" ? t("loading") : t("submit")}</GatedSubmit>
           {status === "error" && <p className="text-center text-sm text-red-300">{t("err")}</p>}
         </form>
       </Card>

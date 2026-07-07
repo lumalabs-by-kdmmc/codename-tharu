@@ -27,6 +27,12 @@ A trilingual (Sinhala / English, Tamil coming soon) web app: Vedic astrology, pa
 | `PROKERALA_CLIENT_SECRET` | Yes | Prokerala client secret (production) |
 | `OPENAI_API_KEY` | For AI | Powers AI reading, porondam, dreams, palm; without it readings use a template |
 | `LLM_MODEL` | Optional | Default `gpt-4o-mini`; set `gpt-4o` for better Sinhala. Palm uses `gpt-4o` (vision) regardless |
+| `BETTER_AUTH_SECRET` | Yes | Random secret (`openssl rand -base64 32`) |
+| `BETTER_AUTH_URL` | Yes | Site base URL, e.g. `https://codename-tharu.vercel.app` |
+| `GOOGLE_CLIENT_ID` | Yes | Google OAuth client id |
+| `GOOGLE_CLIENT_SECRET` | Yes | Google OAuth client secret |
+
+Auth (Better Auth + Google) protects the AI routes via `middleware.ts`. Google OAuth redirect URI: `{BETTER_AUTH_URL}/api/auth/callback/google`. Better Auth tables (`user`, `session`, `account`, `verification`) live in the same Neon DB.
 
 ## Database (Neon)
 - `profiles` — submitted birth details
