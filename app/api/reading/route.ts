@@ -1,4 +1,4 @@
-import { neon } from '@neondatabase/serverless';
+import { getUserId, saveReading } from '../../../lib/session';
 import { getKundliAdvanced } from '../../../lib/prokerala';
 import { extractFacts, generateReading } from '../../../lib/reading';
 
@@ -46,22 +46,17 @@ export async function POST(req) {
     return Response.json({ ok: false, error: 'reading_failed' }, { status: 500 });
   }
 
-  // Best-effort persistence — never fail the user's reading if the DB write hiccups.
-  try {
-    if (process.env.DATABASE_URL) {
-      const sql = neon(process.env.DATABASE_URL);
-      const rows = await sql`
-        INSERT INTO profiles (name, birth_date, birth_time, time_known, place, lat, lon, lang)
-        VALUES (${name || null}, ${date}, ${known ? time : null}, ${!!timeKnown}, ${place || null}, ${lat}, ${lon}, ${lang || 'en'})
-        RETURNING id`;
-      const pid = rows[0] && rows[0].id;
-      await sql`
-        INSERT INTO readings (profile_id, kind, nakshatra, moon_rasi, sun_rasi, dasha_current, chart, reading_en, reading_si, model)
-        VALUES (${pid}, 'birth', ${facts.nakshatra}, ${facts.moon_rasi}, ${facts.sun_rasi}, ${facts.dasha_current}, ${JSON.stringify(facts)}::jsonb, ${reading.reading_en}, ${reading.reading_si}, ${reading.model})`;
-    }
-  } catch {
-    // ignore persistence errors
-  }
+  const userId = await getUserId(req);
+  await saveReading({
+    userId,
+    kind: 'birth',
+    titleEn: reading.headline_en,
+    titleSi: reading.headline_si,
+    contentEn: reading.reading_en,
+    contentSi: reading.reading_si,
+    data: { facts, name: name || null, date, place: place || null },
+    model: reading.model,
+  });
 
   return Response.json({ ok: true, facts, reading });
 }

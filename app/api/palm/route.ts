@@ -1,4 +1,5 @@
 import { visionJSON, hasLLM } from '../../../lib/llm';
+import { getUserId, saveReading } from '../../../lib/session';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 45;
@@ -22,6 +23,10 @@ export async function POST(req) {
       "Frame everything as light entertainment and self-reflection, NOT prediction, and never medical, legal or financial advice.",
     ].join(" ");
     const out = await visionJSON(prompt, image);
+    if (out && out.is_palm && out.quality_ok) {
+      const userId = await getUserId(req);
+      await saveReading({ userId, kind: 'palm', titleEn: out.headline_en, titleSi: out.headline_si, contentEn: out.reading_en, contentSi: out.reading_si, data: {}, model: 'gpt-4o' });
+    }
     return Response.json({ ok: true, out });
   } catch (e) {
     return Response.json({ ok: false, error: 'reading_failed', detail: String((e && e.message) || e).slice(0, 160) }, { status: 500 });
