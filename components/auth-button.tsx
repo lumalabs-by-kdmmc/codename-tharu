@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import { LogOut, ScrollText } from "lucide-react";
 import { useSession, signIn, signOut } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -40,6 +40,9 @@ export function AuthButton({ label = "Sign in" }: { label?: string }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>{u.name || u.email}</DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => { window.location.href = "/history"; }}>
+          <ScrollText className="h-4 w-4" /> My readings
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="h-4 w-4" /> Sign out
         </DropdownMenuItem>

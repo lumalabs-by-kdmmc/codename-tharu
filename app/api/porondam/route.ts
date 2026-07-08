@@ -1,5 +1,6 @@
 import { getKundliMatching } from '../../../lib/prokerala';
 import { chatJSON, hasLLM } from '../../../lib/llm';
+import { getUserId, saveReading } from '../../../lib/session';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -43,6 +44,18 @@ export async function POST(req) {
       interp = await chatJSON([{ role: 'system', content: sys }, { role: 'user', content: "Porondam result: " + JSON.stringify(facts) }]);
     } catch { /* interpretation optional */ }
   }
+
+  const userId = await getUserId(req);
+  await saveReading({
+    userId,
+    kind: 'porondam',
+    titleEn: (interp && interp.headline_en) || `Guna Milan ${facts.total ?? '?'} / ${facts.max ?? '?'}`,
+    titleSi: (interp && interp.headline_si) || `ගුණ මිලාන ${facts.total ?? '?'} / ${facts.max ?? '?'}`,
+    contentEn: (interp && interp.verdict_en) || facts.verdict || null,
+    contentSi: (interp && interp.verdict_si) || null,
+    data: facts,
+    model: interp ? (process.env.LLM_MODEL || 'gpt-4o-mini') : 'api',
+  });
 
   return Response.json({ ok: true, facts, interp });
 }
